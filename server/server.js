@@ -8,8 +8,13 @@ const app = express();
 const http = require('http').createServer(app);
 const wss = new WebSocket.Server({ server: http });
 
-//Serve static files from the React app
+// Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../client/build')));
+
+// Handle requests to the root URL
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 
 // Set up multer storage destination and filename format
 const storage = multer.diskStorage({
@@ -26,11 +31,6 @@ const upload = multer({ storage });
 
 // Serve static files from the 'uploads' directory
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
-
-// Handle all other requests and send back index.html
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
-});
 
 // Handle WebSocket connections
 wss.on('connection', (ws) => {
