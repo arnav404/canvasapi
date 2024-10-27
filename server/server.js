@@ -65,6 +65,7 @@ app.post('/upload', upload.single('image'), (req, res) => {
 });
 
 // Start the HTTP server
-http.listen(5000, () => {
-    console.log('Server started on http://localhost:5000');
+const PORT = process.env.PORT || 5000; // Use the PORT from Heroku or default to 5000
+http.listen(PORT, () => {
+    console.log(`Server started on http://localhost:${PORT}`);
 });
