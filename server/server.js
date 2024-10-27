@@ -27,6 +27,11 @@ const upload = multer({ storage });
 // Serve static files from the 'uploads' directory
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
+// Handle all other requests and send back index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
+
 // Handle WebSocket connections
 wss.on('connection', (ws) => {
     console.log('Client connected');
