@@ -12,7 +12,7 @@ const LatestImage = () => {
         // Create WebSocket connection
         const socket = new WebSocket(socketUrl);
 
-        console.log('Checking socket');
+        console.log(socketUrl);
 
         // Handle WebSocket messages
         socket.onmessage = (event) => {

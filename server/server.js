@@ -8,6 +8,8 @@ const app = express();
 const http = require('http').createServer(app);
 const wss = new WebSocket.Server({ server: http });
 
+console.log(wss);
+
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../client/build')));
 
