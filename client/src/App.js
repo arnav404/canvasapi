@@ -4,20 +4,25 @@ const LatestImage = () => {
     const [imageUrl, setImageUrl] = useState('');
 
     useEffect(() => {
-        // Establish WebSocket connection
-        const socket = new WebSocket('ws://https://canvasapi-26caa84d499e.herokuapp.com');
+        // Dynamically determine WebSocket URL based on the environment
+        const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';  // Use wss for production
+        const port = process.env.PORT || 5000; // Use Heroku port or 5000 locally
+        const socketUrl = `${protocol}://${window.location.hostname}:${port}`; // WebSocket URL
 
-        // Listen for messages
+        // Create WebSocket connection
+        const socket = new WebSocket(socketUrl);
+
+        // Handle WebSocket messages
         socket.onmessage = (event) => {
-            console.log('ping');
+            console.log('Received WebSocket message');
             const data = JSON.parse(event.data);
             if (data.imageUrl) {
-                setImageUrl(`https://canvasapi-26caa84d499e.herokuapp.com${data.imageUrl}`);
+                setImageUrl(data.imageUrl); // Update the state with the image URL
             }
         };
 
         return () => {
-            socket.close(); // Clean up the socket connection on component unmount
+            socket.close(); // Clean up the WebSocket connection on component unmount
         };
     }, []);
 
