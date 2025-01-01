@@ -5,14 +5,14 @@ const LatestImage = () => {
 
     useEffect(() => {
         // Establish WebSocket connection
-        const socket = new WebSocket('ws://localhost:5000');
+        const socket = new WebSocket('ws://https://canvasapi-26caa84d499e.herokuapp.com');
 
         // Listen for messages
         socket.onmessage = (event) => {
             console.log('ping');
             const data = JSON.parse(event.data);
             if (data.imageUrl) {
-                setImageUrl(`http://localhost:5000${data.imageUrl}`);
+                setImageUrl(`https://canvasapi-26caa84d499e.herokuapp.com${data.imageUrl}`);
             }
         };
 
