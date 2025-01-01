@@ -8,12 +8,17 @@ const app = express();
 const http = require('http').createServer(app);
 const wss = new WebSocket.Server({ server: http });
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../client/build')));
+// Serve static files from the React app's build directory
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+// Handle all routes (i.e., React Router) by sending back index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
 
 // Handle requests to the root URL
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+    res.sendFile(path.join(__dirname, 'client/build/index.html'));
 });
 
 // Set up multer storage destination and filename format
