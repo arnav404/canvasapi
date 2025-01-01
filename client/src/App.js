@@ -12,6 +12,8 @@ const LatestImage = () => {
         // Create WebSocket connection
         const socket = new WebSocket(socketUrl);
 
+        console.log('Checking socket');
+
         // Handle WebSocket messages
         socket.onmessage = (event) => {
             console.log('Received WebSocket message');
@@ -22,6 +24,7 @@ const LatestImage = () => {
         };
 
         return () => {
+            console.log('Socket close');
             socket.close(); // Clean up the WebSocket connection on component unmount
         };
     }, []);
